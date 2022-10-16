@@ -82,6 +82,11 @@ public class User extends AbstractNamedEntity {
     }
 
     @Override
+    public boolean isNew() {
+        return super.isNew();
+    }
+
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
