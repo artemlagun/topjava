@@ -21,6 +21,26 @@
     <h3><a href="index.html">Home</a></h3>
     <hr/>
     <h2>Meals</h2>
+
+    <form method="post" action="meals?action=filter">
+        <table border="0" cellpadding="5" cellspacing="0">
+            <tr>
+                <th>От даты (включая)</th>
+                <th><input type="date" value="${requestScope.startDate}" name="startDate"></th>
+                <th>До даты (включая)</th>
+                <th><input type="date" value="${requestScope.endDate}" name="endDate"></th>
+                <th>От времени (включая)</th>
+                <th><input type="time" value="${requestScope.startTime}" name="startTime"></th>
+                <th>До времени (исключая)</th>
+                <th><input type="time" value="${requestScope.endTime}" name="endTime"></th>
+            </tr>
+        </table>
+        <br>
+        <button type="submit">Filter</button>
+        <input type="button" value="Cancel" onclick="window.location.href='${requestScope.meal}'"/>
+
+    </form>
+
     <a href="meals?action=create">Add Meal</a>
     <br><br>
     <table border="1" cellpadding="8" cellspacing="0">
