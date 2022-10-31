@@ -1,7 +1,14 @@
 package ru.javawebinar.topjava.service;
 
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExternalResource;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,6 +20,9 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -26,6 +36,36 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+
+    private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
+    private static final StringBuilder results = new StringBuilder();
+
+    @Rule
+    public Stopwatch stopwatch = new Stopwatch() {
+        @Override
+        protected void finished(long nanos, Description description) {
+            String result = String.format("%-95s %7d", description.getDisplayName(), TimeUnit.NANOSECONDS.toMillis(nanos));
+            results.append(result).append('\n');
+            log.info(result + " ms\n");
+        }
+    };
+
+    private static final String DELIM = Stream.generate(() -> "-").limit(103).collect(Collectors.joining());
+
+    @ClassRule
+    public static final ExternalResource SUMMARY = new ExternalResource() {
+        @Override
+        protected void before() throws Throwable {
+            results.setLength(0);
+        }
+
+        @Override
+        protected void after() {
+            log.info("\n" + DELIM +
+                    "\nTest                                                                                       Duration, ms" +
+                    "\n" + DELIM + "\n" + results + DELIM + "\n");
+        }
+    };
 
     @Autowired
     private MealService service;
