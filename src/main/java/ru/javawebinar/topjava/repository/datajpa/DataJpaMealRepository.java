@@ -29,24 +29,29 @@ public class DataJpaMealRepository implements MealRepository {
         }
     }
 
-        @Override
-        public boolean delete ( int id, int userId){
-            return crudRepository.delete(id, userId) != 0;
-        }
-
-        @Override
-        public Meal get ( int id, int userId){
-            Meal meal = crudRepository.findById(id).orElse(null);
-            return meal != null && Objects.requireNonNull(meal.getUser().getId()) == userId ? meal : null;
-        }
-
-        @Override
-        public List<Meal> getAll (int userId){
-            return crudRepository.getAll(userId);
-        }
-
-        @Override
-        public List<Meal> getBetweenHalfOpen (LocalDateTime startDateTime, LocalDateTime endDateTime,int userId){
-            return crudRepository.getBetween(startDateTime, endDateTime, userId);
-        }
+    @Override
+    public boolean delete(int id, int userId) {
+        return crudRepository.delete(id, userId) != 0;
     }
+
+    @Override
+    public Meal get(int id, int userId) {
+        Meal meal = crudRepository.findById(id).orElse(null);
+        return meal != null && Objects.requireNonNull(meal.getUser().getId()) == userId ? meal : null;
+    }
+
+    @Override
+    public List<Meal> getAll(int userId) {
+        return crudRepository.getAll(userId);
+    }
+
+    @Override
+    public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
+        return crudRepository.getBetween(startDateTime, endDateTime, userId);
+    }
+
+    @Override
+    public Meal getWithUser(int id, int userId) {
+        return crudRepository.getWithUser(id, userId);
+    }
+}
