@@ -2,14 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://topjava.javawebinar.ru/functions" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <html>
+<jsp:include page="fragments/headTag.jsp"/>
 <head>
     <title>Meals</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
-    <h3><a href="index.jsp">Home</a></h3>
+    <h3> <a href="${pageContext.request.contextPath}"><spring:message code="app.home"/></a></h3>
     <hr/>
     <h2>Meals</h2>
     <form method="get" action="meals">
@@ -62,5 +66,6 @@
         </c:forEach>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

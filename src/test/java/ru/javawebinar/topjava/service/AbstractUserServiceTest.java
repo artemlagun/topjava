@@ -13,6 +13,7 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import javax.validation.ConstraintViolationException;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import ru.javawebinar.topjava.repository.JpaUtil;
 
@@ -27,12 +28,15 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
-    @Autowired
+    @Autowired(required = false)
     protected JpaUtil jpaUtil;
 
     @Before
     public void setup() {
-        cacheManager.getCache("users").clear();
+        Objects.requireNonNull(cacheManager.getCache("users")).clear();
+        if (isJdbc()) {
+            return;
+        }
         jpaUtil.clear2ndLevelHibernateCache();
     }
 
