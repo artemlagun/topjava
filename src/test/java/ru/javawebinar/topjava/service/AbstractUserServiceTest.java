@@ -32,7 +32,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     protected JpaUtil jpaUtil;
 
     @Before
-    public void setup() {
+    public void setUp() {
         Objects.requireNonNull(cacheManager.getCache("users")).clear();
         if (isJdbc()) {
             return;
@@ -45,6 +45,16 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         User created = service.create(getNew());
         int newId = created.id();
         User newUser = getNew();
+        newUser.setId(newId);
+        USER_MATCHER.assertMatch(created, newUser);
+        USER_MATCHER.assertMatch(service.get(newId), newUser);
+    }
+
+    @Test
+    public void createMultipleRoles() {
+        User created = service.create(getNewMultipleRoles());
+        int newId = created.id();
+        User newUser = getNewMultipleRoles();
         newUser.setId(newId);
         USER_MATCHER.assertMatch(created, newUser);
         USER_MATCHER.assertMatch(service.get(newId), newUser);
@@ -94,7 +104,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() {
         List<User> all = service.getAll();
-        USER_MATCHER.assertMatch(all, admin, guest, user);
+        USER_MATCHER.assertMatch(all, admin, user);
     }
 
     @Test

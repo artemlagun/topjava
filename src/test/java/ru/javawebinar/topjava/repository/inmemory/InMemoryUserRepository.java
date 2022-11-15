@@ -18,7 +18,6 @@ public class InMemoryUserRepository extends InMemoryBaseRepository<User> impleme
         map.clear();
         put(user);
         put(admin);
-        put(guest);
         counter.getAndSet(GUEST_ID + 1);
     }
 
