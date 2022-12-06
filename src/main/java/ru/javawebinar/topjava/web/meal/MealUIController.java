@@ -39,7 +39,7 @@ public class MealUIController extends AbstractMealController {
     }
 
     @Override
-    @GetMapping("/filter")
+    @GetMapping(value = "/filter")
     public List<MealTo> getBetween(
             @RequestParam @Nullable LocalDate startDate,
             @RequestParam @Nullable LocalTime startTime,

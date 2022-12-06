@@ -37,3 +37,21 @@ $(function () {
         })
     );
 });
+
+let filter = "";
+
+function getFilter() {
+    $.ajax({
+        url: ctx.ajaxUrl + "filter/?" + $("#filterAdjustments").serialize(),
+        type: "GET"
+    }).done(function (data) {
+        updateTable(data)
+        filter = "filter/?" + $("#filterAdjustments").serialize();
+    });
+}
+
+function updateData() {
+    $.get(ctx.ajaxUrl + filter, function (data) {
+        updateTable(data);
+    });
+}
