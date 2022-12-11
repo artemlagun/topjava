@@ -10,5 +10,8 @@
                 <span class="fa fa-sign-out"></span>
             </a>
         </form>
+        <script type="text/javascript">
+            let locale = "ru";
+        </script>
     </div>
 </nav>
